@@ -44,6 +44,7 @@ async function getData() {
   for (post of posts) {
     //MAKE API CALL TO WP
     const url = config.WP_URI;
+    // ADD DATA HERE IF YOU REQUIRE CUSTOM POST TYPES CATEGORIES ETC
     const postData = {
       content: post.content_html,
       title: post.content_title,
