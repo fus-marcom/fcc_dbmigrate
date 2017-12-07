@@ -21,7 +21,6 @@ const sequelize = new Sequelize(
   config.DB_PASS,
   {
     host: config.DB_HOST,
-    port: config.DB_PORT,
     dialect: config.DB_DIALECT
   }
 );
@@ -38,7 +37,7 @@ let counter = 0;
 async function getData() {
   // might you need to test the query in sql studio
   const res = await sequelize.query(
-    `SELECT content_id,content_html,content_title, content_status FROM content WHERE content_status = 'A'`
+    `SELECT content_id,content_html,content_title, content_status FROM content WHERE content_id = '4214'`
   );
   const posts = res[0];
   for (post of posts) {
