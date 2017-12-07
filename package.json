@@ -1,0 +1,11 @@
+{
+  "name": "db_migratation",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Harshit Pant <pantharshit00@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^1.7.3",
+    "sequelize": "^4.27.0"
+  }
+}
