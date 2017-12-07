@@ -65,7 +65,7 @@ async function getData() {
       .then(res => {
         // LOGING HOW MUCH DONE
         counter += 1;
-        if (counter % 1 == 0) console.log('POST INSERTED ' + counter);
+        if (counter % 500 == 0) console.log('POST INSERTED ' + counter);
       });
   }
 }
