@@ -37,18 +37,19 @@ let counter = 0;
 async function getData() {
   // might you need to test the query in sql studio
   const res = await sequelize.query(
-    `SELECT content_id,content_html,content_title, content_status FROM content WHERE content_id = '4214'`
+    `SELECT content_id,content_title,content_html FROM content WHERE (folder_id = '144' AND DATALENGTH(content_html) > 0)`
   );
   const posts = res[0];
   for (post of posts) {
     //MAKE API CALL TO WP
-    const url = config.WP_URI;
+    const url = config.WP_URI + 'faculty';
     // ADD DATA HERE IF YOU REQUIRE CUSTOM POST TYPES CATEGORIES ETC
     const postData = {
       content: post.content_html,
       title: post.content_title,
-      status: 'publish'
-    };
+      status: 'publish',
+      'faculty-department': [5]
+    }
     // FOR AUTHENTICATION FOR WP
     const base64User = new Buffer(
       `${config.WP_USER}:${config.WP_PASS}`
@@ -65,7 +66,7 @@ async function getData() {
       .then(res => {
         // LOGING HOW MUCH DONE
         counter += 1;
-        if (counter % 500 == 0) console.log('POST INSERTED ' + counter);
+        console.log('POST INSERTED ' + counter);
       });
   }
 }
