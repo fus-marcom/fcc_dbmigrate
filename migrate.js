@@ -44,7 +44,18 @@ async function getData() {
     //MAKE API CALL TO WP
     const url = config.WP_URI + 'faculty';
     // ADD DATA HERE IF YOU REQUIRE CUSTOM POST TYPES CATEGORIES ETC
+
+    // Regexp
+    let name = post.content_title
+      // Make it lower case
+    name = name.toLowerCase()
+      // Now Magic!
+    name = name.replace(/(\s?\bdr\b|\s\bfr\b|\s\btor\b|\s?[$&+,:;=?@#|'<>.^*()%!-])/g, '');
+    //replace space by dash
+    name = name.replace(' ', '-');
+    
     const postData = {
+      slug: name,
       content: post.content_html,
       title: post.content_title,
       status: 'publish',

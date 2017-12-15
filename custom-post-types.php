@@ -69,7 +69,10 @@ function create_new_type() {
 		'capability_type' => 'post',
 		'rewrite' => array( 'slug' => 'faculty' ),
 		'show_in_rest'       => true,
-		'show_in_menu'       => true,
+    'show_in_menu'       => true,
+    'show_in_graphql' => true,
+    'graphql_single_name' => 'faculty',
+    'graphql_plural_name' => 'faculty',
 		)
   );
 }
@@ -122,7 +125,10 @@ function create_topics_hierarchical_taxonomy() {
     'show_in_menu'       => true,
     'show_in_rest'       => true,
 		'rest_base'          => 'faculty-department',
-		'rest_controller_class' => 'WP_REST_Terms_Controller',
+    'rest_controller_class' => 'WP_REST_Terms_Controller',
+    'show_in_graphql' => true,
+		'graphql_single_name' => 'facultyDepartment',
+		'graphql_plural_name' => 'facultyDepartments',
   ));
 
 }
