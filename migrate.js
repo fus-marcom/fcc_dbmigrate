@@ -37,7 +37,7 @@ let counter = 0;
 async function getData() {
   // might you need to test the query in sql studio
   const res = await sequelize.query(
-    `SELECT content_id,content_title,content_html FROM content WHERE (folder_id = '144' AND DATALENGTH(content_html) > 0)`
+    `SELECT content_id,content_title,content_html FROM content WHERE (folder_id = '145' AND DATALENGTH(content_html) > 0)`
   );
   const posts = res[0];
   for (post of posts) {
@@ -53,13 +53,13 @@ async function getData() {
     name = name.replace(/(\s?\bdr\b|\s\bfr\b|\s\btor\b|\s?[$&+,:;=?@#|'<>.^*()%!-])/g, '');
     //replace space by dash
     name = name.replace(' ', '-');
-    
+
     const postData = {
       slug: name,
       content: post.content_html,
       title: post.content_title,
       status: 'publish',
-      'faculty-department': [5]
+      'faculty-department': [19]
     }
     // FOR AUTHENTICATION FOR WP
     const base64User = new Buffer(

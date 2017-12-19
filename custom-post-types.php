@@ -64,7 +64,7 @@ function create_new_type() {
 		'labels' => $labels,
 		'has_archive' => true,
 		'public' => true,
-		'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail', 'category'),
+		'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail'),
 		'exclude_from_search' => false,
 		'capability_type' => 'post',
 		'rewrite' => array( 'slug' => 'faculty' ),
@@ -73,6 +73,40 @@ function create_new_type() {
     'show_in_graphql' => true,
     'graphql_single_name' => 'faculty',
     'graphql_plural_name' => 'faculty',
+		)
+  );
+
+	// Create Directory type
+	// set up labels
+	$labels = array(
+		'name' => 'Directories',
+			'singular_name' => 'Directory',
+			'add_new' => 'Add New Directory',
+			'add_new_item' => 'Add New Directory',
+			'edit_item' => 'Edit Directory',
+			'new_item' => 'New Directory',
+			'all_items' => 'All Directories',
+			'view_item' => 'View Directory',
+			'search_items' => 'Search Directories',
+			'not_found' =>  'No Directories Found',
+			'not_found_in_trash' => 'No Directories found in Trash',
+			'parent_item_colon' => '',
+			'menu_name' => 'Directories',
+		);
+		//register post type
+	register_post_type( 'directory', array(
+		'labels' => $labels,
+		'has_archive' => true,
+		'public' => true,
+		'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail'),
+		'exclude_from_search' => false,
+		'capability_type' => 'post',
+		'rewrite' => array( 'slug' => 'directories' ),
+		'show_in_rest'       => true,
+    'show_in_menu'       => true,
+    'show_in_graphql' => true,
+    'graphql_single_name' => 'directory',
+    'graphql_plural_name' => 'directories',
 		)
   );
 }
