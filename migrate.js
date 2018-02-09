@@ -12,20 +12,20 @@
 // IMPORTS (JUST FOR YOUR INFO YOU CAN USE import from syntax USING BABEL-NODE)
 // WE ARE GOING TO USE SEQUELIZE FROM OUR ORM
 
-const Sequelize = require('sequelize');
-const fetch = require('node-fetch');
-const config = require('./config');
+const Sequelize = require('sequelize')
+const fetch = require('node-fetch')
+const config = require('./config')
 const sequelize = new Sequelize(
   config.DB_NAME,
   config.DB_USER,
   config.DB_PASS,
   {
     host: config.DB_HOST,
-    dialect: config.DB_DIALECT
+    dialect: config.DB_DIALECT,
   }
-);
+)
 
-let counter = 0;
+let counter = 0
 // important add one which you are using in the original db
 // $ yarn add pg pg-hstore
 // $ yarn add mysql2
@@ -37,53 +37,60 @@ let counter = 0;
 async function getData() {
   // might you need to test the query in sql studio
   const res = await sequelize.query(
-    `SELECT content_id,content_title,content_html FROM content WHERE (folder_id = '145' AND DATALENGTH(content_html) > 0)`
-  );
-  const posts = res[0];
+    `SELECT content_id,content_title,content_html,content_teaser,date_created FROM content WHERE (folder_id = '109' AND DATALENGTH(content_html) > 0)`
+  )
+  const posts = res[0]
   for (post of posts) {
     //MAKE API CALL TO WP
-    const url = config.WP_URI + 'faculty';
+    const url = config.WP_URI + 'student-profile-page'
     // ADD DATA HERE IF YOU REQUIRE CUSTOM POST TYPES CATEGORIES ETC
 
     // Regexp
-    let name = post.content_title
-      // Make it lower case
-    name = name.toLowerCase()
-      // Now Magic!
-    name = name.replace(/(\s?\bdr\b|\s\bfr\b|\s\btor\b|\s?[$&+,:;=?@#|'<>.^*()%!-])/g, '');
+    // let name = post.content_title
+    // Make it lower case
+    // name = name.toLowerCase()
+    // Now Magic!
+    // name = name.replace(/(\s?\bdr\b|\s\bfr\b|\s\btor\b|\s?[$&+,:;=?@#|'<>.^*()%!-])/g, '');
     //replace space by dash
-    name = name.replace(' ', '-');
+    // name = name.replace(' ', '-');
+
+    // const isoDate = new Date(post.date_created).toISOString()
 
     const postData = {
-      slug: name,
+      // slug: name,
       content: post.content_html,
       title: post.content_title,
       status: 'publish',
-      'faculty-department': [19]
+      excerpt: post.content_teaser,
+      // date: isoDate,
+      // 'faculty-department': [4],
+      // 'institute-name': [26],
+      // 'staff-department': [28],
+      // 'household-type': [29],
     }
     // FOR AUTHENTICATION FOR WP
     const base64User = new Buffer(
       `${config.WP_USER}:${config.WP_PASS}`
-    ).toString('base64');
+    ).toString('base64')
     fetch(url, {
       body: JSON.stringify(postData),
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
-        Authorization: `Basic ${base64User}`
-      }
+        Authorization: `Basic ${base64User}`,
+      },
     })
       .then(res => res.json())
       .then(res => {
         // LOGING HOW MUCH DONE
-        counter += 1;
-        console.log('POST INSERTED ' + counter);
-      });
+        counter += 1
+        console.log('POST INSERTED ' + counter)
+      })
   }
 }
 
-getData();
+getData()
 
 sequelize.sync().then(() => {
-  console.log('YOOO UP n RUNNING');
-});
+  console.log('YOOO UP n RUNNING')
+})
